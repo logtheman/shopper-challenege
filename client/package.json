@@ -1,10 +1,14 @@
 {
-  "name": "client",
+  "name": "shopper_challenge",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bootstrap": "^4.0.0-alpha.6",
+    "prop-types": "^15.5.10",
     "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "react-transition-group": "^1.2.0",
+    "reactstrap": "^4.8.0"
   },
   "devDependencies": {
     "react-scripts": "1.0.12"

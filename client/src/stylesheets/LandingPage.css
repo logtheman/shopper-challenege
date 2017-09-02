@@ -1,0 +1,95 @@
+
+/************** SIGNUP FORM STYLES **************/ 
+.sign-up-form{
+  background-color: rgba(250, 250, 250, .8);
+  border-radius: 5px;
+  padding-top: 3em,
+}
+
+.apply-button{
+  font-size: 1.25em;
+  background-color: #FF5600;
+  color: white;
+}
+
+.apply-button.active{
+  background-color: #43B02A;
+  color: white;
+
+}
+
+.landing-page-container{
+  background: url('../images/background-bananas.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.logo {
+  margin:0;
+  width: auto;
+  height: 50px;
+  padding-bottom: 10px;
+  margin-left: 5px;
+}
+
+.landing-page-header{
+  background-color: rgba(250, 250, 250, .8);
+  -webkit-box-shadow: 0px 5px 20px -7px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 5px 20px -7px rgba(0,0,0,0.75);
+  box-shadow: 0px 5px 20px -7px rgba(0,0,0,0.75);
+}
+
+.landing-page-main{
+  font-size: 2.75em;
+  color: #43B02A;
+}
+
+.landing-page-secondary{
+  font-size: 1.2em;
+  color: #43B02A;
+}
+
+.highlight{
+  color: #FF5600;
+  font-weight: 500;
+}
+
+.form-group{
+  margin-bottom: .5em;
+}
+
+/************** INFO CARD STYLES **************/ 
+.info-card{
+  height: 60px;
+  background-color: rgba(255, 255, 255, .9);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  font-size: .8em;
+}
+
+@media(min-width: 970px){
+  .info-card{
+    height: 80px;
+  }
+}
+
+@media(min-width: 740px) and (max-width: 969px){
+  .info-card{
+    height: 100px;
+  }
+}
+
+.info-card-last {
+  margin-right: 10px;
+}
+
+.info-card-icon{
+  font-size: 2.5em;
+  color: #43B02A;
+}
+
+.info-card-headline{
+  color: #43B02A;
+  font-size: 1.25em;
+  padding-top:5px;
+}
