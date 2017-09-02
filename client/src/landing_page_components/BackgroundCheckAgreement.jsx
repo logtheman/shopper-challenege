@@ -4,15 +4,16 @@ import { Button, Form } from 'reactstrap';
 
 const BackgroundCheckAgreement =  props => {
   return (
-    <div>
-      <div className="text-center">
+    <div className="pt-2">
+      <div className="text-center pb-2">
         <h2> Agree to Background Check</h2>
       </div>
       <div className="container"> 
-        In order to ensure Instacart customers recieve the highest quality service, Instacart requires background
-        checks for all of its shoppers. 
+      I hereby authorize Instacart to investigate my background and 
+      qualifications for purposes of evaluating whether I am qualified for the position as an Instacart Shopper.
 
-        Please confirm that you agree to allow Instacart to run a background check:
+      I also understand that I am providing Instacart permission to conduct this investigation or contract a third party to do so for them.
+
       </div>
       <Form>
         <div className="row mt-3">
@@ -20,7 +21,7 @@ const BackgroundCheckAgreement =  props => {
             <Button 
               color="success"
               className="btn-block mb-3">
-              Agree  
+              Authorize 
             </Button>
           </div>
           <div className="col-6">

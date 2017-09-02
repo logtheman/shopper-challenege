@@ -7,6 +7,7 @@ import LandingPageHeader from './LandingPageHeader';
 import '../stylesheets/LandingPage.css';
 
 class LandingPageContainer extends React.Component {
+  
 
   render(){
     return(
