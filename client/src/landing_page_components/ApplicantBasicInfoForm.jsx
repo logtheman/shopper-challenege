@@ -1,5 +1,7 @@
 import React from 'react';
 import { Button, Form } from 'reactstrap';
+import PropTypes from 'prop-types';
+
 
 import FormFeedbackGroup from './FormFeedbackGroup';
 import { checkField } from '../common/formValidityChecks';
@@ -24,6 +26,7 @@ class SignUpForm extends React.Component {
     this.onLeaveField = this.onLeaveField.bind(this);
     this.checkFormValidity = this.checkFormValidity.bind(this);
     this.checkFormCompleteness = this.checkFormCompleteness.bind(this);
+    this.onSubmitForm = this.onSubmitForm.bind(this);
   }
 
   updateFieldState(event) {
@@ -52,7 +55,6 @@ class SignUpForm extends React.Component {
 
   checkFormValidity(){
     for(let error in this.state.errors){
-      console.log("this.state.errors[error]", this.state.errors[error]);
       if(this.state.errors[error]){
         return false;
       }
@@ -62,12 +64,17 @@ class SignUpForm extends React.Component {
 
   checkFormCompleteness(){
     for(let field in this.state.applicant){
-      console.log("this.state.applicant[field]", this.state.applicant[field]);
       if(this.state.applicant[field] === null){
         return false;
       }
     }
     return true;
+  }
+
+  onSubmitForm(){
+    if(this.state.canProceed){
+      this.props.submitSuccessfully(this.state.applicant);
+    }
   }
 
   render(){
@@ -122,7 +129,9 @@ class SignUpForm extends React.Component {
             fieldState={this.state.status.zipcode}/>
           <div className="row mt-4">
             <div className="col-12">
-              <Button className={`btn-block apply-button mb-3 ${proceedButtonColor}`} >
+              <Button 
+                className={`btn-block apply-button mb-3 ${proceedButtonColor}`} 
+                onClick={this.onSubmitForm}>
                 Apply Now!  
               </Button>
             </div>
@@ -130,6 +139,10 @@ class SignUpForm extends React.Component {
       </Form>
     );
   }
+}
+
+FormFeedbackGroup.propTypes = {
+  submitSuccessfully: PropTypes.func.isRequired,
 }
 
 export default SignUpForm;

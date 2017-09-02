@@ -1,5 +1,10 @@
 
 # Shopper Challenge By Logan Murdock
 
+PRIORTIES:
+- Clean interface that is welcoming
+- Responsive form that politely warns the applicant when incorrect data entered
+- Responsive signals to move forward
 
-Bootstrap was not allowing me to use offset-md-3 
+DIFFICULTIES:
+- Spent too much time styling and being Concerned with the footer
