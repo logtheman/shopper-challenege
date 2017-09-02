@@ -58,38 +58,24 @@
 }
 
 /************** INFO CARD STYLES **************/ 
-.info-card{
-  height: 60px;
-  background-color: rgba(255, 255, 255, .9);
-  border-radius: 10px;
-  margin-bottom: 20px;
+
+.info-card-row{
+  background-color: rgba(250, 250, 250, .8);
+  /*background-color: #393939; */
   margin-top: 20px;
+}
+
+.info-card{
   font-size: .8em;
-}
-
-@media(min-width: 970px){
-  .info-card{
-    height: 80px;
-  }
-}
-
-@media(min-width: 740px) and (max-width: 969px){
-  .info-card{
-    height: 100px;
-  }
-}
-
-.info-card-last {
-  margin-right: 10px;
+  /*color:white;*/
 }
 
 .info-card-icon{
-  font-size: 2.5em;
   color: #43B02A;
 }
 
 .info-card-headline{
   color: #43B02A;
-  font-size: 1.25em;
+  font-size: 1.8em;
   padding-top:5px;
 }
