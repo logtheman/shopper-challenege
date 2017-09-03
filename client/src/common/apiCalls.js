@@ -3,22 +3,15 @@ import * as utils from './apiUtils';
 
 export function createApplicant(payload){
   utils.post('/applicants', payload).then(response => {
-    if(response.status !== 200 || response.status !== 204){
-      console.log("unable to create applicant:", response);
-      return false;
-    }
-    return true
+    console.log("response", response);
+    return response;
   });
 }
 
 export function editApplicant(payload){
   console.log("editApplicant api call", payload);
   utils.put(`/applicants/${payload.applicant.id}`, payload).then(response => {
-    if(response.status !== 200 || response.status !== 204){
-      console.log("unable to edit applicant:", response);
-      return false;
-    }
-    return true
+    return response;
   });
 }
 
@@ -27,6 +20,12 @@ export function createSession(payload){
     return applicant;
   }).catch(error => {
     return `There has been an error: ${error}`;
+  });
+}
+
+export function deleteSession(){
+  utils.deleteRequest('/logout').then(response => {
+    return response;
   });
 }
 

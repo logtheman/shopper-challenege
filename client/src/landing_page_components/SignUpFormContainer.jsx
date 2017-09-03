@@ -3,6 +3,9 @@ import ApplicantBasicInfoForm from './ApplicantBasicInfoForm';
 import BackgroundCheckAgreement from './BackgroundCheckAgreement';
 import LoginForm from './LoginForm';
 import * as api from '../common/apiCalls'; 
+import * as utils from '../common/utils';
+import * as apiUtils from '../common/apiUtils';
+
 
 
 class SignUpFormContainer extends React.Component {
@@ -10,66 +13,101 @@ class SignUpFormContainer extends React.Component {
     super(props);
     this.state = {
       showBackgroundApproval: false,
+      completeForm: false,
+      applicantId: null,
+      errors: "",
     }
     this.onSubmitBasicInfo = this.onSubmitBasicInfo.bind(this);
+    this.toggleBackgroundCheckForm = this.toggleBackgroundCheckForm.bind(this);
+    this.handleAgreeToBackgroundCheck = this.handleAgreeToBackgroundCheck.bind(this);
+  }
+
+  toggleBackgroundCheckForm(){
+    this.setState({showBackgroundApproval: !this.state.showBackgroundApproval });
+  }
+
+  handleAgreeToBackgroundCheck(){
+    let payload = utils.applicantNameJStoRuby(this.props.applicant);
+    payload.applicant.agree_background = true;
+    payload.applicant.id = this.state.applicantId ? this.state.applicantId :
+     this.props.applicant.id;
+     apiUtils.post('/applicants', payload).then(response => {
+       if(response){
+         this.setState({
+           showBackgroundApproval: false,
+           completeForm: true,
+         });
+       }else{
+         this.setState({
+           errors: "Error please retry"
+         });
+       }
+     });
+    let response = api.editApplicant(payload);
   }
 
   onSubmitBasicInfo(applicantInfo){
-    this.setState({
-      showBackgroundApproval: true,
-    });
-    const payload = {
-      applicant: {
-        first_name: applicantInfo.firstName,
-        last_name: applicantInfo.lastName,
-        phone: applicantInfo.phone,
-        email: applicantInfo.email,
-        zip_code: applicantInfo.zipcode
-      }
-    }
-    let response = "";
-    console.log("applicant in SignUpFormContainer", this.props.applicant);
-
-    if(this.props.applicant){
+    let payload = utils.applicantNameJStoRuby(applicantInfo);
+    if(this.props.signedIn && this.props.applicant){
       payload.applicant.id = this.props.applicant.id;
-      response = api.editApplicant(payload);
+      api.editApplicant(payload);
     }else{
-      response = api.createApplicant(payload);
+      apiUtils.post('/applicants', payload).then(response => {
+        if(response){
+          this.setState({
+            applicantId: response.id,
+            showBackgroundApproval: true,
+          });
+        }else{
+          this.setState({
+            errors: "Invalid Entry. Please Check Form"
+          });
+        }
+      });
     }
-    console.log("respose from server", response);
-
+    if(this.props.applicant && !this.props.applicant.backgrounCheck){
+      this.setState({
+        showBackgroundApproval: true,
+      });
+    }
   }
 
   render(){
     console.log("sign in container form:", this.props);
+    let formDetail, backgroundAgreement, loginForm, showComplete, headerText = "";
 
-    let formDetail, backgroundAgreement, loginForm, headerText = "";
-    if(this.props.showSignInForm){
-      headerText= "Sign In";
-      loginForm = (
-        <LoginForm 
-          handleLogin={this.props.handleLogin}
-        />);
+    if(this.state.completeForm){
+
     }else{
-      if(this.state.showBackgroundApproval){
-        backgroundAgreement = (<BackgroundCheckAgreement />)
+      if(this.props.showSignInForm){
+        headerText= "Sign In";
+        loginForm = (
+          <LoginForm 
+            handleLogin={this.props.handleLogin}
+          />);
       }else{
-        headerText = this.props.signedIn ? "Welcome Back!" : "Applicant Information"
-        if(!this.props.signedIn || this.props.applicant){
-          // Signin and data hasn't loaded yet
-          formDetail = (
-              <ApplicantBasicInfoForm 
-              submitSuccessfully={this.onSubmitBasicInfo}
-              firstName={this.props.applicant && this.props.applicant.firstName}
-              lastName={this.props.applicant && this.props.applicant.lastName}
-              email={this.props.applicant && this.props.applicant.email}
-              phone={this.props.applicant && this.props.applicant.phone}
-              zipcode={this.props.applicant && this.props.applicant.zipcode}
-              signedIn={this.props.signedIn}
-            />)
-
+        if(this.state.showBackgroundApproval && !this.props.applicant.agree_background){
+          backgroundAgreement = (
+            <BackgroundCheckAgreement 
+              toggleBackgroundCheckForm={this.toggleBackgroundCheckForm}
+              onClickAgree={this.handleAgreeToBackgroundCheck}
+            />);
         }else{
-          formDetail = <div>Loading ...</div>
+          headerText = this.props.signedIn ? "Welcome Back!" : "Applicant Information"
+          if(!this.props.signedIn || this.props.applicant){
+            formDetail = (
+                <ApplicantBasicInfoForm 
+                submitSuccessfully={this.onSubmitBasicInfo}
+                firstName={this.props.applicant && this.props.applicant.firstName}
+                lastName={this.props.applicant && this.props.applicant.lastName}
+                email={this.props.applicant && this.props.applicant.email}
+                phone={this.props.applicant && this.props.applicant.phone}
+                zipcode={this.props.applicant && this.props.applicant.zipcode}
+                signedIn={this.props.signedIn}
+              />)
+          }else{
+            formDetail = <div>Loading ...</div>
+          }
         }
       }
     }
@@ -80,6 +118,7 @@ class SignUpFormContainer extends React.Component {
           {formDetail}
           {loginForm}
           {backgroundAgreement}
+          {this.state.errors}
       </div>
     );
   }

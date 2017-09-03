@@ -6,6 +6,7 @@ class ApplicantsController < ApplicationController
     @applicant = Applicant.new(applicant_params)
     if @applicant.save
       session[:applicant_email] = @applicant.email
+      render json: @applicant
     else
       render json: @applicant.errors
     end
@@ -37,7 +38,7 @@ class ApplicantsController < ApplicationController
     end
 
     def applicant_params
-      params.required(:applicant).permit(:id, :first_name, :last_name, :email, :phone, :zip_code, :region, :phone_type, :source, :over_21)
+      params.required(:applicant).permit(:id, :first_name, :last_name, :email, :phone, :zip_code, :agree_background, :region, :phone_type, :source, :over_21)
     end
 
 end

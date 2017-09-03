@@ -18,14 +18,24 @@ class LandingPageContainer extends React.Component {
     }
     this.toggleSignInForm = this.toggleSignInForm.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleSignOut = this.handleSignOut.bind(this);
   }
 
   toggleSignInForm(){
     this.setState({showSignInForm: !this.state.showSignInForm})
   }
 
+  handleSignOut(){
+    this.setState({
+      showSignInForm: false,
+      signedIn: false,
+      applicant: {},
+    })
+    let response = api.deleteSession();
+    console.log("response in signout", response);
+  }
+
   handleLogin(email){
-    console.log("createSession", email);
     const payload = {email: email}
     utils.post('/login', payload).then(applicant => {
        console.log("applicant: ", applicant);
@@ -46,12 +56,17 @@ class LandingPageContainer extends React.Component {
   render(){
     const signInOption = !this.state.signedIn ?
         (<div className="text-center already-applied-link pt-1">
-          Already Applied
+          Already Applied?
           {' '}
           <span className="highlight link" onClick={this.toggleSignInForm}>
             Sign-In
           </span>
-        </div>) : null;
+        </div>) : 
+        (<div className="text-center already-applied-link pt-1">
+            <span className="highlight link" onClick={this.handleSignOut}>
+              Sign-Out
+            </span>
+          </div>);
 
     return(
       <div className="landing-page-container"> 

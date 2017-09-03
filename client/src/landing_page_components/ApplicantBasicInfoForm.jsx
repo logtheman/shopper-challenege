@@ -59,7 +59,6 @@ class ApplicantBasicInfoForm extends React.Component {
 
   checkFormValidity(){
     for(let error in this.state.errors){
-      console.log("this.state.errors[error]", this.state.errors[error]);
       if(this.state.errors[error]){
         return false;
       }
@@ -69,7 +68,6 @@ class ApplicantBasicInfoForm extends React.Component {
 
   checkFormCompleteness(){
     for(let field in this.state.applicant){
-      console.log("this.state.applicant[field]", this.state.applicant[field]);
       if(this.state.applicant[field] === null){
         return false;
       }
@@ -86,8 +84,6 @@ class ApplicantBasicInfoForm extends React.Component {
   render(){
     const proceedButtonColor = this.state.canProceed  ? "active" : "";
     const buttonText = this.props.signedIn ? "Edit Info" : "Apply Now!";
-    console.log("Basic info props", this.props);
-    console.log("basic info state", this.state);
 
     return (
       <Form className="">

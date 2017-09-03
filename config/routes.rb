@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   post   '/login',   to: 'sessions#new'
-  # post   '/login',   to: 'sessions#create'
+  get   '/get_session',   to: 'sessions#show'
   delete '/logout',  to: 'sessions#destroy'
 
   # resources :sessions, only: [:new, :create, :destroy]

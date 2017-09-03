@@ -20,14 +20,17 @@ const BackgroundCheckAgreement =  props => {
           <div className="col-6">
             <Button 
               color="success"
-              className="btn-block mb-3">
+              className="btn-block mb-3"
+              onClick={props.onClickAgree}
+              >
               Agree
             </Button>
           </div>
           <div className="col-6">
             <Button 
               color="default"
-              className="btn-block mb-3">
+              className="btn-block mb-3"
+              onClick={props.toggleBackgroundCheckForm}>
               Back
             </Button>
           </div>
