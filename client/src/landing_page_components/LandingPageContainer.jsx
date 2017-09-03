@@ -7,7 +7,12 @@ import LandingPageHeader from './LandingPageHeader';
 import '../stylesheets/LandingPage.css';
 
 class LandingPageContainer extends React.Component {
-  
+  constructor(props){
+    super(props);
+    this.state = {
+
+    }
+  }
 
   render(){
     return(
@@ -17,7 +22,10 @@ class LandingPageContainer extends React.Component {
           <div className="row">
             <div className="col-md-3" />
             <div className="col-md-6 mt-4">
-             <SignUpFormContainer />
+
+              <SignUpFormContainer 
+                session={this.props.session}
+              />
             </div>
           </div>
         </div>

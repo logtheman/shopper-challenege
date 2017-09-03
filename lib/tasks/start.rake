@@ -1,3 +1,3 @@
 task :start do
-  exec 'cd client && yarn start'
+  exec 'foreman start -p 3000'
 end

@@ -11,8 +11,8 @@ const BackgroundCheckAgreement =  props => {
       <div className="container"> 
       I hereby authorize Instacart to investigate my background and 
       qualifications for purposes of evaluating whether I am qualified for the position as an Instacart Shopper.
-
-      I also understand that I am providing Instacart permission to conduct this investigation or contract a third party to do so for them.
+      <br /><br />
+      I understand that I am providing Instacart permission to conduct this investigation or contract a third party to do so for them.
 
       </div>
       <Form>
@@ -21,7 +21,7 @@ const BackgroundCheckAgreement =  props => {
             <Button 
               color="success"
               className="btn-block mb-3">
-              Authorize 
+              Agree
             </Button>
           </div>
           <div className="col-6">

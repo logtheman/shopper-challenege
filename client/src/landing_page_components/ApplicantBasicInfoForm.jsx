@@ -6,19 +6,20 @@ import PropTypes from 'prop-types';
 import FormFeedbackGroup from './FormFeedbackGroup';
 import { checkField } from '../common/formValidityChecks';
 
-class SignUpForm extends React.Component {
+class ApplicantBasicInfoForm extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       applicant: {
-        firstName: null,
-        lastName: null,
-        email: null,
-        phone: null,
-        zipcode: null
+        firstName: props.firstName,
+        lastName: props.lastName,
+        email: props.email,
+        phone: props.phone,
+        zipcode: props.zipcode,
       },
       errors: {},
       status: {},
+      hasSubmitted: false,
       canProceed: false,
 
     }
@@ -27,6 +28,10 @@ class SignUpForm extends React.Component {
     this.checkFormValidity = this.checkFormValidity.bind(this);
     this.checkFormCompleteness = this.checkFormCompleteness.bind(this);
     this.onSubmitForm = this.onSubmitForm.bind(this);
+  }
+
+  componentWillMount(){
+    this.setState({canProceed: this.checkFormValidity() && this.checkFormCompleteness()});
   }
 
   updateFieldState(event) {
@@ -55,6 +60,7 @@ class SignUpForm extends React.Component {
 
   checkFormValidity(){
     for(let error in this.state.errors){
+      console.log("this.state.errors[error]", this.state.errors[error]);
       if(this.state.errors[error]){
         return false;
       }
@@ -64,6 +70,7 @@ class SignUpForm extends React.Component {
 
   checkFormCompleteness(){
     for(let field in this.state.applicant){
+      console.log("this.state.applicant[field]", this.state.applicant[field]);
       if(this.state.applicant[field] === null){
         return false;
       }
@@ -79,6 +86,9 @@ class SignUpForm extends React.Component {
 
   render(){
     const proceedButtonColor = this.state.canProceed  ? "active" : "";
+    const buttonText = this.state.hasSubmitted ? "Edit Info" : "Apply Now!";
+    console.log("Basic info props", this.props);
+    console.log("basic info state", this.state);
 
     return (
       <Form className="">
@@ -89,6 +99,7 @@ class SignUpForm extends React.Component {
               name="firstName" 
               onChange={this.updateFieldState}
               onBlur={this.onLeaveField}
+              defaultValue={this.state.applicant.firstName}
               feedbackText={this.state.errors.firstName}
               fieldState={this.state.status.firstName}/>
           </div>
@@ -98,6 +109,7 @@ class SignUpForm extends React.Component {
               name="lastName" 
               onChange={this.updateFieldState}
               onBlur={this.onLeaveField}
+              defaultValue={this.state.applicant.lastName}
               feedbackText={this.state.errors.lastName}
               fieldState={this.state.status.lastName}/>
           </div>
@@ -107,15 +119,17 @@ class SignUpForm extends React.Component {
             name="email" 
             onChange={this.updateFieldState}
             onBlur={this.onLeaveField}
+            defaultValue={this.state.applicant.email}
             feedbackText={this.state.errors.email}
             fieldState={this.state.status.email}/>
 
           <FormFeedbackGroup 
-            placeholder="Phone Number"
+            placeholder="415-960-1234"
             maxLength="14"
             name="phone" 
             onChange={this.updateFieldState}
             onBlur={this.onLeaveField}
+            defaultValue={this.state.applicant.phone}
             feedbackText={this.state.errors.phone}
             fieldState={this.state.status.phone}/>
 
@@ -125,6 +139,7 @@ class SignUpForm extends React.Component {
             name="zipcode" 
             onChange={this.updateFieldState}
             onBlur={this.onLeaveField}
+            defaultValue={this.state.applicant.zipcode}
             feedbackText={this.state.errors.zipcode}
             fieldState={this.state.status.zipcode}/>
           <div className="row mt-4">
@@ -141,10 +156,10 @@ class SignUpForm extends React.Component {
   }
 }
 
-FormFeedbackGroup.propTypes = {
+ApplicantBasicInfoForm.propTypes = {
   submitSuccessfully: PropTypes.func.isRequired,
 }
 
-export default SignUpForm;
+export default ApplicantBasicInfoForm;
 
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormGroup, Label, Input, FormFeedback} from 'reactstrap';
 
 
-const FormFeedbackGroup = ({name, fieldState, feedbackText, label, placeholder, maxLength, onChange, onBlur}) => {
+const FormFeedbackGroup = ({name, fieldState, feedbackText, label, defaultValue, placeholder, maxLength, onChange, onBlur}) => {
 
   return(
     <FormGroup color={fieldState}>
@@ -13,6 +13,7 @@ const FormFeedbackGroup = ({name, fieldState, feedbackText, label, placeholder, 
         state={fieldState} 
         maxLength={maxLength}
         placeholder={placeholder} 
+        defaultValue={defaultValue}
         onChange={onChange}
         onBlur={onBlur}/>
       <FormFeedback>{feedbackText}</FormFeedback>
@@ -26,6 +27,7 @@ FormFeedbackGroup.propTypes = {
   onBlur: PropTypes.func,
   label: PropTypes.string,
   placeholder: PropTypes.string,
+  defaultValue: PropTypes.string,
   feedbackText: PropTypes.string,
   fieldState: PropTypes.string,
   maxLength: PropTypes.string,
