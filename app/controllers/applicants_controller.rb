@@ -5,7 +5,7 @@ class ApplicantsController < ApplicationController
     if @applicant.save
       session[:applicant_email] = @applicant.email
     else
-      render json: "failed to create application"
+      render json: @applicant.errors
     end
   end
 

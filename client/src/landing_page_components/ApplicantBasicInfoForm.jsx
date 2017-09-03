@@ -99,7 +99,7 @@ class ApplicantBasicInfoForm extends React.Component {
               name="firstName" 
               onChange={this.updateFieldState}
               onBlur={this.onLeaveField}
-              defaultValue={this.state.applicant.firstName}
+              defaultValue={this.props.firstName}
               feedbackText={this.state.errors.firstName}
               fieldState={this.state.status.firstName}/>
           </div>
@@ -109,7 +109,7 @@ class ApplicantBasicInfoForm extends React.Component {
               name="lastName" 
               onChange={this.updateFieldState}
               onBlur={this.onLeaveField}
-              defaultValue={this.state.applicant.lastName}
+              defaultValue={this.props.lastName}
               feedbackText={this.state.errors.lastName}
               fieldState={this.state.status.lastName}/>
           </div>
@@ -119,7 +119,7 @@ class ApplicantBasicInfoForm extends React.Component {
             name="email" 
             onChange={this.updateFieldState}
             onBlur={this.onLeaveField}
-            defaultValue={this.state.applicant.email}
+            defaultValue={this.props.email}
             feedbackText={this.state.errors.email}
             fieldState={this.state.status.email}/>
 
@@ -129,7 +129,7 @@ class ApplicantBasicInfoForm extends React.Component {
             name="phone" 
             onChange={this.updateFieldState}
             onBlur={this.onLeaveField}
-            defaultValue={this.state.applicant.phone}
+            defaultValue={this.props.phone}
             feedbackText={this.state.errors.phone}
             fieldState={this.state.status.phone}/>
 
@@ -139,7 +139,7 @@ class ApplicantBasicInfoForm extends React.Component {
             name="zipcode" 
             onChange={this.updateFieldState}
             onBlur={this.onLeaveField}
-            defaultValue={this.state.applicant.zipcode}
+            defaultValue={this.props.zipcode}
             feedbackText={this.state.errors.zipcode}
             fieldState={this.state.status.zipcode}/>
           <div className="row mt-4">

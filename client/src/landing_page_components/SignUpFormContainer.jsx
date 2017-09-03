@@ -36,6 +36,8 @@ class SignUpFormContainer extends React.Component {
   }
 
   render(){
+    console.log("sign in container form:", this.props);
+
     let formDetail, backgroundAgreement, loginForm = "";
     if(this.props.showSignInForm){
       loginForm = (
@@ -43,17 +45,25 @@ class SignUpFormContainer extends React.Component {
           handleLogin={this.props.handleLogin}
         />);
     }else{
-      formDetail = !this.state.completedInfo ?  
-        (<ApplicantBasicInfoForm 
-          submitSuccessfully={this.onSubmitBasicInfo}
-          firstName={this.props.applicant && this.props.applicant.firstName}
-          lastName={this.props.applicant && this.props.applicant.lastName}
-          email={this.props.applicant && this.props.applicant.email}
-          phone={this.props.applicant && this.props.applicant.phone}
-          zipcode={this.props.applicant && this.props.applicant.zipcode}
-        />) : null;
-      backgroundAgreement = this.state.completedInfo ? 
-        (<BackgroundCheckAgreement />) : null;
+      if(this.state.completedInfo){
+        backgroundAgreement = (<BackgroundCheckAgreement />)
+      }else{
+        if(!this.props.signedIn || this.props.applicant){
+          // Signin and data hasn't loaded yet
+          formDetail = (
+              <ApplicantBasicInfoForm 
+              submitSuccessfully={this.onSubmitBasicInfo}
+              firstName={this.props.applicant && this.props.applicant.firstName}
+              lastName={this.props.applicant && this.props.applicant.lastName}
+              email={this.props.applicant && this.props.applicant.email}
+              phone={this.props.applicant && this.props.applicant.phone}
+              zipcode={this.props.applicant && this.props.applicant.zipcode}
+            />)
+
+        }else{
+          formDetail = <div>Loading ...</div>
+        }
+      }
     }
 
     return (
@@ -74,12 +84,5 @@ class SignUpFormContainer extends React.Component {
 }
 
 export default SignUpFormContainer;
-
-
-// firstName={this.props.session.firstName}
-// lastName={this.props.session.lastName}
-// email={this.props.session.email}
-// phone={this.props.session.phone}
-// zipcode={this.props.session.zipcode}
 
 

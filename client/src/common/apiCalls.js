@@ -2,10 +2,12 @@ import * as utils from './apiUtils';
 
 
 export function createApplicant(payload){
-  utils.post('/applicants', payload).then(() => {
-    return "Successfully Submitted";
-  }).catch(error => {
-    return `There has been an error: ${error}`;
+  utils.post('/applicants', payload).then(response => {
+    if(response.status !== 200 || response.status !== 204){
+      console.log("unable to create applicant:", response);
+      return false;
+    }
+    return true
   });
 }
 
