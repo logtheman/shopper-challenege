@@ -19,6 +19,11 @@
 
 }
 
+.form-group{
+  margin-bottom: .5em;
+}
+
+/*********** LAANDING PAGE STYLES ********************/
 .landing-page-container{
   background: url('../images/background-bananas.jpg') no-repeat center center fixed;
   background-size: cover;
@@ -54,9 +59,16 @@
   font-weight: 500;
 }
 
-.form-group{
-  margin-bottom: .5em;
+.link{
+  cursor: pointer;
 }
+
+.already-applied-link{
+  color: white;
+  font-size: .8em;
+}
+
+
 
 /************** INFO CARD STYLES **************/ 
 

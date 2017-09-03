@@ -10,8 +10,15 @@ class LandingPageContainer extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-
+      signedIn: false,
+      showSignInForm: false,
+      applicant: {}
     }
+    this.toggleSignInForm = this.toggleSignInForm.bind(this);
+  }
+
+  toggleSignInForm(){
+    this.setState({showSignInForm: !this.state.showSignInForm})
   }
 
   render(){
@@ -24,8 +31,15 @@ class LandingPageContainer extends React.Component {
             <div className="col-md-6 mt-4">
 
               <SignUpFormContainer 
-                session={this.props.session}
+                showSignInForm={this.state.showSignInForm}
               />
+              <div className="text-center already-applied-link pt-1">
+                Already Applied? 
+                {' '}
+                <span className="highlight link" onClick={this.toggleSignInForm}>
+                  Sign-In
+                </span>
+              </div>
             </div>
           </div>
         </div>

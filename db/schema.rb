@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170902204316) do
+ActiveRecord::Schema.define(version: 20170903043013) do
 
   create_table "applicants", force: :cascade do |t|
     t.string   "first_name"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20170902204316) do
     t.string   "workflow_state"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.string   "zip_code"
   end
 
 end

@@ -1,11 +1,14 @@
 class SessionsController < ApplicationController
 
   def new
-      session[:email] = params[:email]
-  end
-
-  def get
-    
+    applicant = Applicant.find_by(email: params[:email])
+    binding.pry
+    if applicant
+      session[:email] = applicant.email
+      render json: applicant
+    else
+      render json: {message: "No information avaliable"}
+    end
   end
 
   def create

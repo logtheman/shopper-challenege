@@ -20,24 +20,32 @@ class SignUpFormContainer extends React.Component {
       completedInfo: true,
       applicant: applicantInfo
     });
-    const payload = {session: applicantInfo}
-    const response = api.createSession(payload);
+    const payload = {
+      applicant: {
+        first_name: applicantInfo.firstName,
+        last_name: applicantInfo.lastName,
+        phone: applicantInfo.phone,
+        email: applicantInfo.email,
+        zip_code: applicantInfo.zipcode
+      }
+    }
+    const response = api.createApplicant(payload);
     console.log("respose from server", response);
 
   }
 
   render(){
-    const formDetail = !this.state.completedInfo ?  
-      (<ApplicantBasicInfoForm 
-        submitSuccessfully={this.onSubmitBasicInfo}
-        firstName={this.props.session}
-        lastName={this.props.session}
-        email={this.props.session}
-        phone={this.props.session}
-        zipcode={this.props.session}
-      />) : null;
-    const backgroundAgreement = this.state.completedInfo ? 
-      (<BackgroundCheckAgreement />) : null;
+    let formDetail, backgroundAgreement = "";
+    if(this.props.showSignInForm){
+      
+    }else{
+      formDetail = !this.state.completedInfo ?  
+        (<ApplicantBasicInfoForm 
+          submitSuccessfully={this.onSubmitBasicInfo}
+        />) : null;
+      backgroundAgreement = this.state.completedInfo ? 
+        (<BackgroundCheckAgreement />) : null;
+    }
 
     return (
       <div className="container sign-up-form">

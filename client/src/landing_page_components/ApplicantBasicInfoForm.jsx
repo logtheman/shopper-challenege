@@ -147,7 +147,7 @@ class ApplicantBasicInfoForm extends React.Component {
               <Button 
                 className={`btn-block apply-button mb-3 ${proceedButtonColor}`} 
                 onClick={this.onSubmitForm}>
-                Apply Now!  
+               {buttonText}
               </Button>
             </div>
           </div>
