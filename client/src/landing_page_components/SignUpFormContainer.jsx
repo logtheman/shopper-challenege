@@ -2,6 +2,7 @@ import React from 'react';
 import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup';
 import ApplicantBasicInfoForm from './ApplicantBasicInfoForm';
 import BackgroundCheckAgreement from './BackgroundCheckAgreement';
+import LoginForm from './LoginForm';
 import * as api from '../common/apiCalls'; 
 
 
@@ -35,13 +36,21 @@ class SignUpFormContainer extends React.Component {
   }
 
   render(){
-    let formDetail, backgroundAgreement = "";
+    let formDetail, backgroundAgreement, loginForm = "";
     if(this.props.showSignInForm){
-      
+      loginForm = (
+        <LoginForm 
+          handleLogin={this.props.handleLogin}
+        />);
     }else{
       formDetail = !this.state.completedInfo ?  
         (<ApplicantBasicInfoForm 
           submitSuccessfully={this.onSubmitBasicInfo}
+          firstName={this.props.applicant && this.props.applicant.firstName}
+          lastName={this.props.applicant && this.props.applicant.lastName}
+          email={this.props.applicant && this.props.applicant.email}
+          phone={this.props.applicant && this.props.applicant.phone}
+          zipcode={this.props.applicant && this.props.applicant.zipcode}
         />) : null;
       backgroundAgreement = this.state.completedInfo ? 
         (<BackgroundCheckAgreement />) : null;
@@ -51,6 +60,7 @@ class SignUpFormContainer extends React.Component {
       <div className="container sign-up-form">
 
           {formDetail}
+          {loginForm}
         <ReactCSSTransitionGroup
            transitionName="form-transition"
            transitionEnterTimeout={500}

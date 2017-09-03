@@ -10,8 +10,8 @@ export function createApplicant(payload){
 }
 
 export function createSession(payload){
-  utils.post('/login', payload).then(() => {
-    return "Successfully Submitted";
+  utils.post('/login', payload).then(applicant => {
+    return applicant;
   }).catch(error => {
     return `There has been an error: ${error}`;
   });

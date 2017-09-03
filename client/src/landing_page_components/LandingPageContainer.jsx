@@ -4,6 +4,7 @@ import InfoCardsRow from './InfoCardsRow';
 import SignUpFormContainer from './SignUpFormContainer';
 import LandingPageHeader from './LandingPageHeader';
 
+
 import '../stylesheets/LandingPage.css';
 
 class LandingPageContainer extends React.Component {
@@ -12,16 +13,34 @@ class LandingPageContainer extends React.Component {
     this.state = {
       signedIn: false,
       showSignInForm: false,
-      applicant: {}
     }
     this.toggleSignInForm = this.toggleSignInForm.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+
   }
 
   toggleSignInForm(){
     this.setState({showSignInForm: !this.state.showSignInForm})
+    console.log("toggleSignInForm",this.state.showSignInForm );
+  }
+
+  handleLogin(email){
+    this.props.handleLogin(email);
+    this.setState({showSignInForm: !this.state.showSignInForm})
+
   }
 
   render(){
+    console.log("LandingPageContainer props", this.props);
+    const signInOption = !this.state.signedIn ?
+        (<div className="text-center already-applied-link pt-1">
+          Already Applied
+          {' '}
+          <span className="highlight link" onClick={this.toggleSignInForm}>
+            Sign-In
+          </span>
+        </div>) : null;
+
     return(
       <div className="landing-page-container"> 
         <LandingPageHeader />
@@ -32,14 +51,10 @@ class LandingPageContainer extends React.Component {
 
               <SignUpFormContainer 
                 showSignInForm={this.state.showSignInForm}
+                handleLogin={this.handleLogin}
+                applicant={this.props.applicant}
               />
-              <div className="text-center already-applied-link pt-1">
-                Already Applied? 
-                {' '}
-                <span className="highlight link" onClick={this.toggleSignInForm}>
-                  Sign-In
-                </span>
-              </div>
+              {signInOption}
             </div>
           </div>
         </div>

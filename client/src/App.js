@@ -2,24 +2,43 @@ import React, { Component } from 'react';
 
 import LandingPageContainer from './landing_page_components/LandingPageContainer'
 import * as api from './common/apiCalls';
+import * as utils from './common/apiUtils';
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      session: null,
+      applicant: {},
     }
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
-  componentWillMount(){
-    // this.setState({session: api.getSession("logtheman@gmail.com")})
+
+  handleLogin(email){
+    console.log("createSession", email);
+    const payload = {email: email}
+    utils.post('/login', payload).then(applicant => {
+       console.log("applicant: ", applicant);
+       this.setState({
+          applicant: {
+            ...applicant,
+            firstName: applicant.first_name,
+            lastName: applicant.last_name,
+          },
+          showSignInForm: false,
+          signedIn: true,
+       })
+    });
   }
 
   render() {
-    console.log("session", this.state.session);
+    console.log("applicant in APP", this.state.applicant);
     return (
       <div>
-        <LandingPageContainer session={this.state.session}/>
+        <LandingPageContainer 
+        handleLogin={this.handleLogin}
+        applicant={this.state.applicant}
+        />
       </div>
     );
   }
