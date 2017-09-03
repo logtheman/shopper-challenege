@@ -5,6 +5,7 @@ import SignUpFormContainer from './SignUpFormContainer';
 import LandingPageHeader from './LandingPageHeader';
 import * as api from '../common/apiCalls';
 import * as utils from '../common/apiUtils';
+import * as formState from '../common/FormStateTypes';
 
 import '../stylesheets/LandingPage.css';
 
@@ -12,14 +13,28 @@ class LandingPageContainer extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      formState: formState.SHOW_BASIC_INFO, 
       signedIn: false,
-      showSignInForm: false,
+      errors: "",
+      notices: "",
       applicant: {}
     }
-    this.toggleSignInForm = this.toggleSignInForm.bind(this);
+    this.showSignInForm = this.showSignInForm.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
     this.updateStateApplicant = this.updateStateApplicant.bind(this);
+    this.updateFormState = this.updateFormState.bind(this);
+    this.updateErrors = this.updateErrors.bind(this);
+    this.updateNotices = this.updateNotices.bind(this);
+    this.toggleSignIn = this.toggleSignIn.bind(this);
+  }
+
+  updateErrors(error){
+    this.setState({errors: error});
+  }
+
+  updateNotices(notice){
+    this.setState({notices: notice});
   }
 
   updateStateApplicant(applicant){
@@ -27,8 +42,16 @@ class LandingPageContainer extends React.Component {
     this.setState({applicant: applicant});
   }
 
-  toggleSignInForm(){
-    this.setState({showSignInForm: !this.state.showSignInForm})
+  updateFormState(newState){
+    this.setState({formState: newState});
+  }
+
+  showSignInForm(){
+    this.setState({formState: formState.SHOW_SIGN_IN})
+  }
+
+  toggleSignIn(){
+    this.setState({signedIn: !this.state.signedIn})
   }
 
   handleSignOut(){
@@ -36,9 +59,10 @@ class LandingPageContainer extends React.Component {
       showSignInForm: false,
       signedIn: false,
       applicant: {},
+      notices: "Logout succesfully"
+
     })
-    let response = api.deleteSession();
-    console.log("response in signout", response);
+    api.deleteSession();
   }
 
   handleLogin(email){
@@ -53,7 +77,8 @@ class LandingPageContainer extends React.Component {
             zipcode: applicant.zip_code,
             id: applicant.id
           },
-          showSignInForm: false,
+          formState: formState.SHOW_BASIC_INFO,
+          notices: "Login succesfully"
           signedIn: true,
        })
     });
@@ -64,7 +89,7 @@ class LandingPageContainer extends React.Component {
         (<div className="text-center already-applied-link pt-1">
           Already Applied?
           {' '}
-          <span className="highlight link" onClick={this.toggleSignInForm}>
+          <span className="highlight link" onClick={this.showSignInForm}>
             Sign-In
           </span>
         </div>) : 
@@ -83,11 +108,18 @@ class LandingPageContainer extends React.Component {
             <div className="col-md-6 mt-4">
 
               <SignUpFormContainer 
+                formState={this.state.formState}
+                updateFormState={this.updateFormState}
+                updateErrors={this.updateErrors}
+                updateNotices={this.updateNotices}
                 showSignInForm={this.state.showSignInForm}
                 handleLogin={this.handleLogin}
                 updateStateApplicant={this.updateStateApplicant}
                 applicant={this.state.applicant}
                 signedIn={this.state.signedIn}
+                toggleSignIn={this.toggleSignIn}
+                errors={this.state.errors}
+                notices={this.state.notices}
               />
               {signInOption}
             </div>

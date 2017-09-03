@@ -1,0 +1,7 @@
+
+export const SHOW_BASIC_INFO = 'SHOW_BASIC_INFO';
+export const SHOW_BACKGROUND_AGREE = 'SHOW_BACKGROUND_AGREE';
+export const SHOW_COMPLETION = 'SHOW_COMPLETION';
+export const SHOW_SIGN_IN = 'SHOW_SIGN_IN';
+
+

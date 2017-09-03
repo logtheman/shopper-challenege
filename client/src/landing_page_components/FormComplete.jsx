@@ -1,11 +1,19 @@
 import React from 'react';
 import { Button, Form } from 'reactstrap';
 
+import * as formState from '../common/FormStateTypes';
+
+
 const FormComplete = props => {
+
+  function onClickReviewApp(){
+    props.updateFormState(formState.SHOW_BASIC_INFO);
+  }
+
   return (
     <div className="pt-2">
       <div className="text-center pb-2">
-        <h2> Application Submitted!</h2>
+        <h2 className="ic-green"> Application Submitted!</h2>
       </div>
       <div className="container"> 
       We will be reviewing your application and reach out to you to setup an in person training in the next 3-5 business days.
@@ -17,10 +25,10 @@ const FormComplete = props => {
         <div className="row mt-3">
           <div className="col-12">
             <Button 
-              color="default"
+              color="success"
               className="btn-block mb-3"
-              onClick={props.toggleShowComplete}>
-              See Application
+              onClick={onClickReviewApp}>
+              Review Application
             </Button>
           </div>
         </div>

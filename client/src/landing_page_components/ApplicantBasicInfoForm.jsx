@@ -77,7 +77,7 @@ class ApplicantBasicInfoForm extends React.Component {
 
   onSubmitForm(){
     if(this.state.canProceed){
-      this.props.submitSuccessfully(this.state.applicant);
+      this.props.handleSubmit(this.state.applicant);
     }
   }
 
@@ -151,9 +151,9 @@ class ApplicantBasicInfoForm extends React.Component {
   }
 }
 
-ApplicantBasicInfoForm.propTypes = {
-  submitSuccessfully: PropTypes.func.isRequired,
-}
+// ApplicantBasicInfoForm.propTypes = {
+//   submitSuccessfully: PropTypes.func.isRequired,
+// }
 
 export default ApplicantBasicInfoForm;
 

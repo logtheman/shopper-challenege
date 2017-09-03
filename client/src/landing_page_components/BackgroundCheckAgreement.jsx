@@ -1,8 +1,14 @@
 import React from 'react';
 import { Button, Form } from 'reactstrap';
 
+import * as formState from '../common/FormStateTypes';
 
 const BackgroundCheckAgreement =  props => {
+
+  function onClickBack(){
+    props.updateFormState(formState.SHOW_BASIC_INFO);   
+  }
+
   return (
     <div className="pt-2">
       <div className="text-center pb-2">
@@ -30,7 +36,7 @@ const BackgroundCheckAgreement =  props => {
             <Button 
               color="default"
               className="btn-block mb-3"
-              onClick={props.toggleBackgroundCheckForm}>
+              onClick={onClickBack}>
               Back
             </Button>
           </div>

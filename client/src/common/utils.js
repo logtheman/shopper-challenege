@@ -18,7 +18,6 @@ export function applicantNameJStoRuby(applicantInfo){
 
 export function applicantNameRubyToJs(applicantInfo){
   const returnObj ={
-    applicant: {
       id: applicantInfo.id,
       firstName: applicantInfo.first_name,
       lastName: applicantInfo.last_name,
@@ -26,7 +25,6 @@ export function applicantNameRubyToJs(applicantInfo){
       email: applicantInfo.email,
       zipCode: applicantInfo.zip_code,
       agree_background: applicantInfo.agree_background,
-    }
   }
   console.log("applicantNameRubyToJs", returnObj);
   return returnObj;
