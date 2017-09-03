@@ -1,8 +1,11 @@
 import React from 'react';
 import { Button} from 'reactstrap';
+import PropTypes from 'prop-types';
+
 
 import FormFeedbackGroup from './FormFeedbackGroup';
 import { checkField } from '../common/formValidityChecks';
+import * as formState from '../common/FormStateTypes';
 
 
 class LoginForm extends React.Component{
@@ -16,7 +19,7 @@ class LoginForm extends React.Component{
     this.updateFieldState = this.updateFieldState.bind(this);
     this.onLeaveField = this.onLeaveField.bind(this);
     this.onHandleLogin = this.onHandleLogin.bind(this);
-
+    this.onBackButton = this.onBackButton.bind(this);
   }
 
   updateFieldState(event) {
@@ -42,9 +45,12 @@ class LoginForm extends React.Component{
     }
   }
 
+  onBackButton(){
+    this.props.updateFormState(formState.SHOW_BASIC_INFO);
+  }
+
   render(){
     const proceedButtonColor = this.state.canProceed  ? "active" : "";
-
     return(
       <div>
         <FormFeedbackGroup 
@@ -54,7 +60,8 @@ class LoginForm extends React.Component{
           onBlur={this.onLeaveField}
           defaultValue={this.state.email}
           feedbackText={this.state.error}
-          fieldState={this.state.state}/>
+          fieldState={this.state.state}
+        />
 
         <div className="row mt-4">
           <div className="col-12">
@@ -63,11 +70,22 @@ class LoginForm extends React.Component{
               onClick={this.onHandleLogin}>
              Login
             </Button>
+            <Button 
+              color="default"
+              className="btn-block mb-3" 
+              onClick={this.onBackButton}>
+             Back
+            </Button>
           </div>
         </div>
       </div>
     );
   }
+}
+
+LoginForm.propTypes = {
+  handleLogin: PropTypes.func.isRequired,
+  updateFormState: PropTypes.func.isRequired,
 }
 
 export default LoginForm;

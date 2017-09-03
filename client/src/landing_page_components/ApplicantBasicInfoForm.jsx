@@ -10,17 +10,9 @@ class ApplicantBasicInfoForm extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      applicant: {
-        firstName: props.firstName,
-        lastName: props.lastName,
-        email: props.email,
-        phone: props.phone,
-        zipcode: props.zipcode,
-      },
       errors: {},
       status: {},
       canProceed: false,
-
     }
     this.updateFieldState = this.updateFieldState.bind(this);
     this.onLeaveField = this.onLeaveField.bind(this);
@@ -35,10 +27,9 @@ class ApplicantBasicInfoForm extends React.Component {
 
   updateFieldState(event) {
     const field = event.target.name;
-    let tempApplicant = Object.assign({}, this.state.applicant);
+    let tempApplicant = Object.assign({}, this.props.applicant);
     tempApplicant[field] = event.target.value;
-    this.setState({applicant: tempApplicant});
-
+    this.props.updateStateApplicant(tempApplicant);
     this.setState({canProceed: this.checkFormValidity() && this.checkFormCompleteness()});
   }
 
@@ -52,7 +43,6 @@ class ApplicantBasicInfoForm extends React.Component {
     let tempStatus = Object.assign({}, this.state.status);
     tempStatus[field] = errorMessage ? "danger" : "success";
     this.setState({status: tempStatus});
-
     this.setState({canProceed: this.checkFormValidity() && this.checkFormCompleteness()});
 
   }
@@ -67,8 +57,8 @@ class ApplicantBasicInfoForm extends React.Component {
   }
 
   checkFormCompleteness(){
-    for(let field in this.state.applicant){
-      if(this.state.applicant[field] === null){
+    for(let field in this.props.applicant){
+      if(this.props.applicant[field] === null){
         return false;
       }
     }
@@ -77,7 +67,7 @@ class ApplicantBasicInfoForm extends React.Component {
 
   onSubmitForm(){
     if(this.state.canProceed){
-      this.props.handleSubmit(this.state.applicant);
+      this.props.handleSubmit(this.props.applicant);
     }
   }
 
@@ -94,7 +84,7 @@ class ApplicantBasicInfoForm extends React.Component {
               name="firstName" 
               onChange={this.updateFieldState}
               onBlur={this.onLeaveField}
-              defaultValue={this.props.firstName}
+              defaultValue={this.props.applicant.firstName}
               feedbackText={this.state.errors.firstName}
               fieldState={this.state.status.firstName}/>
           </div>
@@ -104,7 +94,7 @@ class ApplicantBasicInfoForm extends React.Component {
               name="lastName" 
               onChange={this.updateFieldState}
               onBlur={this.onLeaveField}
-              defaultValue={this.props.lastName}
+              defaultValue={this.props.applicant.lastName}
               feedbackText={this.state.errors.lastName}
               fieldState={this.state.status.lastName}/>
           </div>
@@ -114,7 +104,7 @@ class ApplicantBasicInfoForm extends React.Component {
             name="email" 
             onChange={this.updateFieldState}
             onBlur={this.onLeaveField}
-            defaultValue={this.props.email}
+            defaultValue={this.props.applicant.email}
             feedbackText={this.state.errors.email}
             fieldState={this.state.status.email}/>
 
@@ -124,7 +114,7 @@ class ApplicantBasicInfoForm extends React.Component {
             name="phone" 
             onChange={this.updateFieldState}
             onBlur={this.onLeaveField}
-            defaultValue={this.props.phone}
+            defaultValue={this.props.applicant.phone}
             feedbackText={this.state.errors.phone}
             fieldState={this.state.status.phone}/>
 
@@ -134,7 +124,7 @@ class ApplicantBasicInfoForm extends React.Component {
             name="zipcode" 
             onChange={this.updateFieldState}
             onBlur={this.onLeaveField}
-            defaultValue={this.props.zipcode}
+            defaultValue={this.props.applicant.zipcode}
             feedbackText={this.state.errors.zipcode}
             fieldState={this.state.status.zipcode}/>
           <div className="row mt-4">
@@ -151,9 +141,13 @@ class ApplicantBasicInfoForm extends React.Component {
   }
 }
 
-// ApplicantBasicInfoForm.propTypes = {
-//   submitSuccessfully: PropTypes.func.isRequired,
-// }
+ApplicantBasicInfoForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  updateStateApplicant: PropTypes.func.isRequired,
+  signedIn: PropTypes.bool.isRequired,
+  applicant: PropTypes.obj,
+}
+
 
 export default ApplicantBasicInfoForm;
 

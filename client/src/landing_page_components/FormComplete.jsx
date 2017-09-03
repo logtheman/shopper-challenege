@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Form } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 import * as formState from '../common/FormStateTypes';
 
@@ -35,6 +36,10 @@ const FormComplete = props => {
       </Form>
     </div>
   )
+}
+
+FormComplete.propTypes = {
+  updateFormState: PropTypes.func.isRequired,
 }
 
 export default FormComplete;

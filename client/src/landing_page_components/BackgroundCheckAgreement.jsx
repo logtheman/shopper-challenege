@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Form } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 import * as formState from '../common/FormStateTypes';
 
@@ -45,5 +46,12 @@ const BackgroundCheckAgreement =  props => {
     </div>
   );
 }
+
+BackgroundCheckAgreement.propsTypes = {
+  updateFormState: PropTypes.func.isRequired,
+  onClickAgree: PropTypes.func.isRequired,
+};
+
+
 
 export default BackgroundCheckAgreement;

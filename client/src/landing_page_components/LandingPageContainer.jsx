@@ -1,10 +1,11 @@
 import React from 'react';
 
+
 import InfoCardsRow from './InfoCardsRow';
 import SignUpFormContainer from './SignUpFormContainer';
 import LandingPageHeader from './LandingPageHeader';
 import * as api from '../common/apiCalls';
-import * as utils from '../common/apiUtils';
+import * as apiUtils from '../common/apiUtils';
 import * as formState from '../common/FormStateTypes';
 
 import '../stylesheets/LandingPage.css';
@@ -38,7 +39,6 @@ class LandingPageContainer extends React.Component {
   }
 
   updateStateApplicant(applicant){
-    console.log("updateStateApplicant applicant", applicant);
     this.setState({applicant: applicant});
   }
 
@@ -60,16 +60,18 @@ class LandingPageContainer extends React.Component {
       signedIn: false,
       applicant: {},
       notices: "Logout succesfully"
-
     })
     api.deleteSession();
   }
 
   handleLogin(email){
-    const payload = {email: email}
-    utils.post('/login', payload).then(applicant => {
-       console.log("applicant: ", applicant);
-       this.setState({
+    const payload = {email: email};
+    apiUtils.post('/login', payload).then(applicant => {
+      if(applicant.message){
+        this.setState({notices: applicant.message});
+      }else{        
+        console.log("applicant: ", applicant);
+        this.setState({
           applicant: {
             ...applicant,
             firstName: applicant.first_name,
@@ -78,9 +80,10 @@ class LandingPageContainer extends React.Component {
             id: applicant.id
           },
           formState: formState.SHOW_BASIC_INFO,
-          notices: "Login succesfully"
+          notices: "Login Successful",
           signedIn: true,
-       })
+        })
+       }
     });
   }
 
@@ -112,7 +115,6 @@ class LandingPageContainer extends React.Component {
                 updateFormState={this.updateFormState}
                 updateErrors={this.updateErrors}
                 updateNotices={this.updateNotices}
-                showSignInForm={this.state.showSignInForm}
                 handleLogin={this.handleLogin}
                 updateStateApplicant={this.updateStateApplicant}
                 applicant={this.state.applicant}

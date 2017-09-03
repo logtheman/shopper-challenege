@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
       session[:email] = applicant.email
       render json: applicant
     else
-      render json: {message: "No information avaliable"}
+      render json: {message: "No applicant with this email exist"}
     end
   end
 

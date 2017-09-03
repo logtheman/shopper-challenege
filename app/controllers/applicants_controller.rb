@@ -30,6 +30,10 @@ class ApplicantsController < ApplicationController
   def delete
   end
 
+  def index
+    render json: Applicant.all
+  end
+
   private
     def set_applicant
       @applicant ||= begin

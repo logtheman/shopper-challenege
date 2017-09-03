@@ -1,13 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import ApplicantBasicInfoForm from './ApplicantBasicInfoForm';
 import BackgroundCheckAgreement from './BackgroundCheckAgreement';
 import LoginForm from './LoginForm';
 import FormComplete from './FormComplete';
-import * as api from '../common/apiCalls'; 
 import * as utils from '../common/utils';
 import * as apiUtils from '../common/apiUtils';
 import * as formState from '../common/FormStateTypes';
-
 
 
 class SignUpFormContainer extends React.Component {
@@ -21,11 +21,7 @@ class SignUpFormContainer extends React.Component {
     this.handleAgreeToBackgroundCheck = this.handleAgreeToBackgroundCheck.bind(this);
   }
 
-
-
   handleAgreeToBackgroundCheck(){
-      console.log("handleAgreeToBackgroundCheck props", this.props);
-
     if(this.props.applicant.id){
       let payload = utils.applicantNameJStoRuby(this.props.applicant);
       payload.applicant.agree_background = true;
@@ -37,7 +33,6 @@ class SignUpFormContainer extends React.Component {
           this.props.updateFormState(formState.SHOW_COMPLETION);
           this.props.updateErrors("");
           this.props.updateNotices("");
-
         }
       });
     }
@@ -63,7 +58,9 @@ class SignUpFormContainer extends React.Component {
     }else{
       apiUtils.post('/applicants', payload).then(response => {
         if(response.status > 200){
-          this.props.updateErrors(response.message);
+          console.log("response :", response);
+          this.props.updateErrors("Application for this email already exist. Please sign in.");
+          this.props.updateFormState(formState.SHOW_BASIC_INFO);
         }else{
           this.props.updateStateApplicant(utils.applicantNameRubyToJs(response));
           this.props.updateFormState(formState.SHOW_BACKGROUND_AGREE);
@@ -95,6 +92,7 @@ class SignUpFormContainer extends React.Component {
         headerText= "Sign In";
         formContent = (<LoginForm 
           handleLogin={this.props.handleLogin}
+          updateFormState={this.props.updateFormState}
         />);
         break;
       default:
@@ -102,11 +100,8 @@ class SignUpFormContainer extends React.Component {
         formContent = (
           <ApplicantBasicInfoForm 
             handleSubmit={this.onSubmitBasicInfo}
-            firstName={this.props.applicant && this.props.applicant.firstName}
-            lastName={this.props.applicant && this.props.applicant.lastName}
-            email={this.props.applicant && this.props.applicant.email}
-            phone={this.props.applicant && this.props.applicant.phone}
-            zipcode={this.props.applicant && this.props.applicant.zipcode}
+            applicant={this.props.applicant}
+            updateStateApplicant={this.props.updateStateApplicant}
             signedIn={this.props.signedIn}
           />);
     }
@@ -114,17 +109,30 @@ class SignUpFormContainer extends React.Component {
     return (
       <div className="container sign-up-form">
         <h3 className="pt-2 text-center ic-green"> {headerText} </h3>
-          {formContent}
-          <div className="text-center highlight">
-            {this.props.errors}
-          </div>
-          <div className="text-center ic-green">
-            {this.props.notices}
-          </div>
-
+        {formContent}
+        <div className="text-center highlight">
+          {this.props.errors}
+        </div>
+        <div className="text-center ic-green">
+          {this.props.notices}
+        </div>
       </div>
     );
   }
+}
+
+SignUpFormContainer.propTypes = {
+  updateFormState: PropTypes.func.isRequired,
+  updateErrors: PropTypes.func.isRequired,
+  updateNotices: PropTypes.func.isRequired,
+  handleLogin: PropTypes.func.isRequired,
+  updateStateApplicant: PropTypes.func.isRequired,
+  signedIn: PropTypes.bool.isRequired,
+  toggleSignIn: PropTypes.func.isRequired,
+  errors: PropTypes.obj,
+  notices: PropTypes.obj,
+  applicant: PropTypes.obj,
+  formState: PropTypes.obj,
 }
 
 export default SignUpFormContainer;

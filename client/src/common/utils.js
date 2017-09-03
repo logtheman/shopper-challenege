@@ -11,7 +11,6 @@ export function applicantNameJStoRuby(applicantInfo){
       agree_background: applicantInfo.agree_background,
     }
   }
-  console.log("applicantNameJStoRuby", returnObj);
   return returnObj;
 }
 
@@ -26,6 +25,5 @@ export function applicantNameRubyToJs(applicantInfo){
       zipCode: applicantInfo.zip_code,
       agree_background: applicantInfo.agree_background,
   }
-  console.log("applicantNameRubyToJs", returnObj);
   return returnObj;
 }
