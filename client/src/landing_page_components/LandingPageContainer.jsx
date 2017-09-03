@@ -34,6 +34,8 @@ class LandingPageContainer extends React.Component {
             ...applicant,
             firstName: applicant.first_name,
             lastName: applicant.last_name,
+            zipcode: applicant.zip_code,
+            id: applicant.id
           },
           showSignInForm: false,
           signedIn: true,

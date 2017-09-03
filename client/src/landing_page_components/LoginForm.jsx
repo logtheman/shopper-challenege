@@ -47,7 +47,6 @@ class LoginForm extends React.Component{
 
     return(
       <div>
-        <h3 className="pt-2 text-center"> Sign In </h3>
         <FormFeedbackGroup 
           placeholder="Email"
           name="email" 

@@ -19,7 +19,6 @@ class ApplicantBasicInfoForm extends React.Component {
       },
       errors: {},
       status: {},
-      hasSubmitted: false,
       canProceed: false,
 
     }
@@ -86,7 +85,7 @@ class ApplicantBasicInfoForm extends React.Component {
 
   render(){
     const proceedButtonColor = this.state.canProceed  ? "active" : "";
-    const buttonText = this.state.hasSubmitted ? "Edit Info" : "Apply Now!";
+    const buttonText = this.props.signedIn ? "Edit Info" : "Apply Now!";
     console.log("Basic info props", this.props);
     console.log("basic info state", this.state);
 

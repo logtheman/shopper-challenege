@@ -33,7 +33,7 @@ export function post(url, payload, options) {
   return _fetch(url, Object.assign({}, defaultOptions, options));
 }
 
-export function put(url, options, payload){
+export function put(url, payload, options = ""){
   const defaultOptions = {
     method: 'PUT',
     body: JSON.stringify(payload),

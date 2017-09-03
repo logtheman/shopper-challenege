@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup';
 import ApplicantBasicInfoForm from './ApplicantBasicInfoForm';
 import BackgroundCheckAgreement from './BackgroundCheckAgreement';
 import LoginForm from './LoginForm';
@@ -10,16 +9,14 @@ class SignUpFormContainer extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      completedInfo: false,
-      applicant: {},
+      showBackgroundApproval: false,
     }
     this.onSubmitBasicInfo = this.onSubmitBasicInfo.bind(this);
   }
 
   onSubmitBasicInfo(applicantInfo){
     this.setState({
-      completedInfo: true,
-      applicant: applicantInfo
+      showBackgroundApproval: true,
     });
     const payload = {
       applicant: {
@@ -30,7 +27,15 @@ class SignUpFormContainer extends React.Component {
         zip_code: applicantInfo.zipcode
       }
     }
-    const response = api.createApplicant(payload);
+    let response = "";
+    console.log("applicant in SignUpFormContainer", this.props.applicant);
+
+    if(this.props.applicant){
+      payload.applicant.id = this.props.applicant.id;
+      response = api.editApplicant(payload);
+    }else{
+      response = api.createApplicant(payload);
+    }
     console.log("respose from server", response);
 
   }
@@ -38,16 +43,18 @@ class SignUpFormContainer extends React.Component {
   render(){
     console.log("sign in container form:", this.props);
 
-    let formDetail, backgroundAgreement, loginForm = "";
+    let formDetail, backgroundAgreement, loginForm, headerText = "";
     if(this.props.showSignInForm){
+      headerText= "Sign In";
       loginForm = (
         <LoginForm 
           handleLogin={this.props.handleLogin}
         />);
     }else{
-      if(this.state.completedInfo){
+      if(this.state.showBackgroundApproval){
         backgroundAgreement = (<BackgroundCheckAgreement />)
       }else{
+        headerText = this.props.signedIn ? "Welcome Back!" : "Applicant Information"
         if(!this.props.signedIn || this.props.applicant){
           // Signin and data hasn't loaded yet
           formDetail = (
@@ -58,6 +65,7 @@ class SignUpFormContainer extends React.Component {
               email={this.props.applicant && this.props.applicant.email}
               phone={this.props.applicant && this.props.applicant.phone}
               zipcode={this.props.applicant && this.props.applicant.zipcode}
+              signedIn={this.props.signedIn}
             />)
 
         }else{
@@ -68,16 +76,10 @@ class SignUpFormContainer extends React.Component {
 
     return (
       <div className="container sign-up-form">
-
+        <h3 className="pt-2 text-center"> {headerText} </h3>
           {formDetail}
           {loginForm}
-        <ReactCSSTransitionGroup
-           transitionName="form-transition"
-           transitionEnterTimeout={500}
-           transitionLeaveTimeout={500}
-         >
           {backgroundAgreement}
-         </ReactCSSTransitionGroup>
       </div>
     );
   }
