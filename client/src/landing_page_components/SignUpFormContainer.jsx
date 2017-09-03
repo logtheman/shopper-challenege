@@ -73,7 +73,6 @@ class SignUpFormContainer extends React.Component {
   }
 
   render(){
-    console.log("signedIn?", this.props.signedIn);
     let formContent, headerText = "";
     switch(this.props.formState){
       case (formState.SHOW_BACKGROUND_AGREE):
@@ -129,10 +128,10 @@ SignUpFormContainer.propTypes = {
   updateStateApplicant: PropTypes.func.isRequired,
   signedIn: PropTypes.bool.isRequired,
   toggleSignIn: PropTypes.func.isRequired,
-  errors: PropTypes.obj,
-  notices: PropTypes.obj,
-  applicant: PropTypes.obj,
-  formState: PropTypes.obj,
+  errors: PropTypes.string,
+  notices: PropTypes.string,
+  applicant: PropTypes.object,
+  formState: PropTypes.string.isRequired,
 }
 
 export default SignUpFormContainer;
