@@ -2,6 +2,7 @@ import React from 'react';
 import ApplicantBasicInfoForm from './ApplicantBasicInfoForm';
 import BackgroundCheckAgreement from './BackgroundCheckAgreement';
 import LoginForm from './LoginForm';
+import FormComplete from './FormComplete';
 import * as api from '../common/apiCalls'; 
 import * as utils from '../common/utils';
 import * as apiUtils from '../common/apiUtils';
@@ -20,23 +21,30 @@ class SignUpFormContainer extends React.Component {
     this.onSubmitBasicInfo = this.onSubmitBasicInfo.bind(this);
     this.toggleBackgroundCheckForm = this.toggleBackgroundCheckForm.bind(this);
     this.handleAgreeToBackgroundCheck = this.handleAgreeToBackgroundCheck.bind(this);
+    this.toggleShowComplete = this.toggleShowComplete.bind(this);
   }
 
   toggleBackgroundCheckForm(){
     this.setState({showBackgroundApproval: !this.state.showBackgroundApproval });
   }
 
+  toggleShowComplete(){
+    this.setState({completeForm: !this.state.completeForm });
+  }
+
   handleAgreeToBackgroundCheck(){
     let payload = utils.applicantNameJStoRuby(this.props.applicant);
     payload.applicant.agree_background = true;
-    payload.applicant.id = this.state.applicantId ? this.state.applicantId :
-     this.props.applicant.id;
+    // payload.applicant.id = this.state.applicantId ? this.state.applicantId :
+    //  this.props.applicant.id;
+     console.log("handleAgreeToBackgroundCheck payload", payload);
      apiUtils.post('/applicants', payload).then(response => {
-       if(response){
+       if(response.status < 300){
          this.setState({
            showBackgroundApproval: false,
            completeForm: true,
          });
+         this.props.updateStateApplicant(response);
        }else{
          this.setState({
            errors: "Error please retry"
@@ -58,6 +66,8 @@ class SignUpFormContainer extends React.Component {
             applicantId: response.id,
             showBackgroundApproval: true,
           });
+          this.props.updateStateApplicant(utils.applicantNameRubyToJs(response));
+
         }else{
           this.setState({
             errors: "Invalid Entry. Please Check Form"
@@ -77,7 +87,7 @@ class SignUpFormContainer extends React.Component {
     let formDetail, backgroundAgreement, loginForm, showComplete, headerText = "";
 
     if(this.state.completeForm){
-
+      showComplete = <FormComplete toggleShowComplete={this.toggleShowComplete}/>
     }else{
       if(this.props.showSignInForm){
         headerText= "Sign In";
@@ -118,6 +128,7 @@ class SignUpFormContainer extends React.Component {
           {formDetail}
           {loginForm}
           {backgroundAgreement}
+          {showComplete}
           {this.state.errors}
       </div>
     );

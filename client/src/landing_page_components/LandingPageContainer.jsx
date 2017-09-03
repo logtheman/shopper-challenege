@@ -19,6 +19,12 @@ class LandingPageContainer extends React.Component {
     this.toggleSignInForm = this.toggleSignInForm.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
+    this.updateStateApplicant = this.updateStateApplicant.bind(this);
+  }
+
+  updateStateApplicant(applicant){
+    console.log("updateStateApplicant applicant", applicant);
+    this.setState({applicant: applicant});
   }
 
   toggleSignInForm(){
@@ -79,6 +85,7 @@ class LandingPageContainer extends React.Component {
               <SignUpFormContainer 
                 showSignInForm={this.state.showSignInForm}
                 handleLogin={this.handleLogin}
+                updateStateApplicant={this.updateStateApplicant}
                 applicant={this.state.applicant}
                 signedIn={this.state.signedIn}
               />
