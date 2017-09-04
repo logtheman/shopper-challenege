@@ -1,6 +1,7 @@
 
 # Shopper Challenge By Logan Murdock
 
+# Part 1
 
 # Setup on Localhost
 bundle install
@@ -29,3 +30,8 @@ GIVEN MORE TIME
   - Initially took on the task without planning how the user flow would be in state
 - Create a more generalized system for changing form components and make info a list
 - Hydrate from the database for client side real-time checking of email avaliablity
+
+# Part 2
+
+# Usage instructions
+
