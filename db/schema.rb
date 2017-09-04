@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170904162255) do
+ActiveRecord::Schema.define(version: 20170904215609) do
 
   create_table "applicants", force: :cascade do |t|
     t.string   "first_name"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20170904162255) do
     t.boolean  "agree_background", default: false
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
-    t.index ["email"], name: "index_applicants_on_email"
+    t.index ["email"], name: "index_applicants_on_email", unique: true
   end
 
 end

@@ -34,8 +34,15 @@ class ApplicantsController < ApplicationController
     render json: Applicant.all
   end
 
-  def week_stats
-
+  def check_email
+    email_found = Applicant.where(email: params[:email]).count > 0 #Whatever your logic is to find duplicate emails
+    if email_found 
+      message = "Email already registered. Please Login"
+      status = 1
+    else
+      status = 0
+    end
+    render json: {status: status, message: message, }
   end
 
   private

@@ -18,7 +18,7 @@ class LandingPageContainer extends React.Component {
       signedIn: false,
       errors: "",
       notices: "",
-      applicant: {}
+      applicant: {},
     }
     this.showSignInForm = this.showSignInForm.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
@@ -58,14 +58,16 @@ class LandingPageContainer extends React.Component {
     this.setState({
       showSignInForm: false,
       signedIn: false,
-      applicant: {},
+      applicant: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        zipcode: "",
+      },
       notices: "Logout succesfully"
     })
     api.deleteSession();
-    const form = document.getElementById("applicantForm");
-    console.log("form:", form);
-    form.reset();
-    document.getElementById("applicantForm").reset();
   }
 
   handleLogin(email){

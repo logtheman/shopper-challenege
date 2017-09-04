@@ -58,8 +58,7 @@ class SignUpFormContainer extends React.Component {
     }else{
       apiUtils.post('/applicants', payload).then(response => {
         if(response.status > 200){
-          console.log("response :", response);
-          this.props.updateErrors("Application for this email already exist. Please sign in.");
+          this.props.updateErrors("Failed to submit. Please recheck form and try again.");
           this.props.updateFormState(formState.SHOW_BASIC_INFO);
         }else{
           this.props.updateStateApplicant(utils.applicantNameRubyToJs(response));

@@ -2,9 +2,9 @@ import React from 'react';
 import { Button, Form } from 'reactstrap';
 import PropTypes from 'prop-types';
 
-
 import FormFeedbackGroup from './FormFeedbackGroup';
 import { checkField } from '../common/formValidityChecks';
+import * as apiUtils from '../common/apiUtils';
 
 class ApplicantBasicInfoForm extends React.Component {
   constructor(props){
@@ -13,12 +13,14 @@ class ApplicantBasicInfoForm extends React.Component {
       errors: {},
       status: {},
       canProceed: false,
+      formFields: ["firstName", "lastName", "email", "phone", "zipcode"],
     }
     this.updateFieldState = this.updateFieldState.bind(this);
     this.onLeaveField = this.onLeaveField.bind(this);
     this.checkFormValidity = this.checkFormValidity.bind(this);
     this.checkFormCompleteness = this.checkFormCompleteness.bind(this);
     this.onSubmitForm = this.onSubmitForm.bind(this);
+    this.checkEmailValidation = this.checkEmailValidation.bind(this);
   }
 
   componentWillMount(){
@@ -33,9 +35,27 @@ class ApplicantBasicInfoForm extends React.Component {
     this.setState({canProceed: this.checkFormValidity() && this.checkFormCompleteness()});
   }
 
+  checkEmailValidation(value){
+    let tempError = Object.assign({}, this.state.errors);
+    let tempStatus = Object.assign({}, this.state.status);
+    apiUtils.post('/check_email', {email: value}).then(response => {
+      if(response.status === 1){
+        tempError.email = response.message;
+        tempStatus.email = "danger";
+        this.setState({
+          errors: tempError,
+          status: tempStatus,
+        });
+      }
+    });
+  }
+
   onLeaveField(event){
     const field = event.target.name;
     let errorMessage = checkField(field, event.target.value);
+    if(field === "email" && !errorMessage){
+      this.checkEmailValidation(event.target.value)
+    }
     let tempError = Object.assign({}, this.state.errors);
     tempError[field] = errorMessage ? errorMessage : null;
     this.setState({errors: tempError});
@@ -44,7 +64,6 @@ class ApplicantBasicInfoForm extends React.Component {
     tempStatus[field] = errorMessage ? "danger" : "success";
     this.setState({status: tempStatus});
     this.setState({canProceed: this.checkFormValidity() && this.checkFormCompleteness()});
-
   }
 
   checkFormValidity(){
@@ -57,16 +76,16 @@ class ApplicantBasicInfoForm extends React.Component {
   }
 
   checkFormCompleteness(){
-    for(let field in this.props.applicant){
-      if(this.props.applicant[field] === null){
-        return false;
-      }
+    for(let i = 0; i < this.state.formFields.length; i++){
+      if(this.props.applicant[this.props.applicant[i]] === null){
+        return false
+      };
+      return true;
     }
-    return true;
   }
 
   onSubmitForm(){
-    if(this.state.canProceed){
+    if(this.checkFormValidity() && this.checkFormCompleteness()){
       this.props.handleSubmit(this.props.applicant);
     }
   }
@@ -84,7 +103,7 @@ class ApplicantBasicInfoForm extends React.Component {
               name="firstName" 
               onChange={this.updateFieldState}
               onBlur={this.onLeaveField}
-              defaultValue={this.props.applicant.firstName}
+              value={this.props.applicant.firstName}
               feedbackText={this.state.errors.firstName}
               fieldState={this.state.status.firstName}/>
           </div>
@@ -94,7 +113,7 @@ class ApplicantBasicInfoForm extends React.Component {
               name="lastName" 
               onChange={this.updateFieldState}
               onBlur={this.onLeaveField}
-              defaultValue={this.props.applicant.lastName}
+              value={this.props.applicant.lastName}
               feedbackText={this.state.errors.lastName}
               fieldState={this.state.status.lastName}/>
           </div>
@@ -104,7 +123,7 @@ class ApplicantBasicInfoForm extends React.Component {
             name="email" 
             onChange={this.updateFieldState}
             onBlur={this.onLeaveField}
-            defaultValue={this.props.applicant.email}
+            value={this.props.applicant.email}
             feedbackText={this.state.errors.email}
             fieldState={this.state.status.email}/>
 
@@ -114,7 +133,7 @@ class ApplicantBasicInfoForm extends React.Component {
             name="phone" 
             onChange={this.updateFieldState}
             onBlur={this.onLeaveField}
-            defaultValue={this.props.applicant.phone}
+            value={this.props.applicant.phone}
             feedbackText={this.state.errors.phone}
             fieldState={this.state.status.phone}/>
 
@@ -124,7 +143,7 @@ class ApplicantBasicInfoForm extends React.Component {
             name="zipcode" 
             onChange={this.updateFieldState}
             onBlur={this.onLeaveField}
-            defaultValue={this.props.applicant.zipcode}
+            value={this.props.applicant.zipcode}
             feedbackText={this.state.errors.zipcode}
             fieldState={this.state.status.zipcode}/>
           <div className="row mt-4">
