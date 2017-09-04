@@ -40,7 +40,7 @@ db.all(`SELECT * FROM applicants WHERE created_at >= ${startDate} AND ${endDate}
       let BoW = getStartofWeek(row.created_at.split(' ')[0]);
       sumWeeksByState(BoW, row.workflow_state);
     })  
-printToCSV(hash);
+  printToCSV(hash);
 
 });   
 db.close();  
