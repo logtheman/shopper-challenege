@@ -62,6 +62,10 @@ class LandingPageContainer extends React.Component {
       notices: "Logout succesfully"
     })
     api.deleteSession();
+    const form = document.getElementById("applicantForm");
+    console.log("form:", form);
+    form.reset();
+    document.getElementById("applicantForm").reset();
   }
 
   handleLogin(email){

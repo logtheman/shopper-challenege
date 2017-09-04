@@ -52,6 +52,4 @@ BackgroundCheckAgreement.propsTypes = {
   onClickAgree: PropTypes.func.isRequired,
 };
 
-
-
 export default BackgroundCheckAgreement;

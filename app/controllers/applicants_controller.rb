@@ -34,6 +34,10 @@ class ApplicantsController < ApplicationController
     render json: Applicant.all
   end
 
+  def week_stats
+
+  end
+
   private
     def set_applicant
       @applicant ||= begin

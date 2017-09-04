@@ -76,7 +76,7 @@ class ApplicantBasicInfoForm extends React.Component {
     const buttonText = this.props.signedIn ? "Edit Info" : "Apply Now!";
 
     return (
-      <Form className="">
+      <Form className="" id="applicantForm">
         <div className="row">
           <div className="col-6">
             <FormFeedbackGroup 
