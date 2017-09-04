@@ -10,7 +10,7 @@ function getStartofWeek(date) {
   date = new Date(date);
   const dayOfWeek = date.getDay();
   // console.log("day of week: ", dayOfWeek);
-  const newDate = date.getDate() - dayOfWeek; //+ (dayOfWeek == 0 ? -6:1); // adjust when day is sunday
+  const firstDayOfWeeK = date.getDate() - dayOfWeek //+ (dayOfWeek == 0 ? -6:1); // adjust when day is sunday
   // console.log("new day of week: ", newDate);
   return new Date(date.setDate(newDate)).toISOString().slice(0,10);
 }
@@ -38,7 +38,7 @@ function printToCSV(hash){
 }
 
 
-db.all(`SELECT * FROM applicants WHERE created_at >= ${startDate} AND ${endDate} ORDER BY created_at`, function(err, rows) {  
+db.all(`SELECT * FROM applicants WHERE created_at >= ${startDate} AND ${endDate} ORDER BY created_at Limit 2000`, function(err, rows) {  
     rows.forEach(function (row) {  
       let BoW = getStartofWeek(row.created_at.split(' ')[0]);
       sumWeeksByState(BoW, row.workflow_state);

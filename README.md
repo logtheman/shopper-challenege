@@ -3,12 +3,12 @@
 
 # Part 1
 
-# Setup on Localhost
-bundle install
-cd client
-yarn install
-cd ..
-rake state
+* Setup on Localhost
+- bundle install
+- cd client
+- npm install
+- cd ..
+- rake state
 
 # Discussion About Project
 
@@ -35,3 +35,4 @@ GIVEN MORE TIME
 
 # Usage instructions
 
+node workflowByWeek.js '2014-07-01' '2014-09-01'
