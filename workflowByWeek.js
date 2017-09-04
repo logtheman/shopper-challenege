@@ -6,12 +6,9 @@ const endDate = process.argv[3];
 let hash = {};
 
 function getStartofWeek(date) {
-  // console.log("original date: ", date);
   date = new Date(date);
   const dayOfWeek = date.getDay();
-  // console.log("day of week: ", dayOfWeek);
-  const firstDayOfWeeK = date.getDate() - dayOfWeek //+ (dayOfWeek == 0 ? -6:1); // adjust when day is sunday
-  // console.log("new day of week: ", newDate);
+  const firstDayOfWeeK = date.getDate() - dayOfWeek;
   return new Date(date.setDate(firstDayOfWeeK)).toISOString().slice(0,10);
 }
 
