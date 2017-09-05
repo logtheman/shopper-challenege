@@ -6,6 +6,7 @@ import SignUpFormContainer from './SignUpFormContainer';
 import LandingPageHeader from './LandingPageHeader';
 import * as api from '../common/apiCalls';
 import * as apiUtils from '../common/apiUtils';
+import * as utils from '../common/utils';
 import * as formState from '../common/FormStateTypes';
 
 import '../stylesheets/LandingPage.css';
@@ -15,10 +16,10 @@ class LandingPageContainer extends React.Component {
     super(props);
     this.state = {
       formState: formState.SHOW_BASIC_INFO, 
-      signedIn: false,
+      signedIn: sessionStorage.getItem("signedIn"),
       errors: "",
       notices: "",
-      applicant: {},
+      applicant: utils.getApplicantFromSession(),
     }
     this.showSignInForm = this.showSignInForm.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
@@ -40,6 +41,7 @@ class LandingPageContainer extends React.Component {
 
   updateStateApplicant(applicant){
     this.setState({applicant: applicant});
+    utils.saveApplicantToSession(applicant);
   }
 
   updateFormState(newState){
@@ -66,8 +68,10 @@ class LandingPageContainer extends React.Component {
         zipcode: "",
       },
       notices: "Logout succesfully"
-    })
-    api.deleteSession();
+    });
+    sessionStorage.clear();
+
+    // api.deleteSession();
   }
 
   handleLogin(email){
@@ -88,8 +92,9 @@ class LandingPageContainer extends React.Component {
           formState: formState.SHOW_BASIC_INFO,
           notices: "Login Successful",
           signedIn: true,
-        })
-       }
+        });
+        utils.saveApplicantToSession(applicant, "server");
+      }
     });
   }
 

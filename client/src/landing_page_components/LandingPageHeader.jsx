@@ -5,7 +5,7 @@ const LandingPageHeader = props => {
   return (
     <div className="landing-page-header text-center pb-3">
       <div className="landing-page-main">
-       Be a Instacart Shopper!
+       Be an Instacart Shopper!
         <img src={logo} alt="logo" className="logo"/>
 
       </div>
