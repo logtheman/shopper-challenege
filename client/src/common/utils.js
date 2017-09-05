@@ -22,14 +22,13 @@ export function applicantNameRubyToJs(applicantInfo){
       lastName: applicantInfo.last_name,
       phone: applicantInfo.phone,
       email: applicantInfo.email,
-      zipCode: applicantInfo.zip_code,
+      zipcode: applicantInfo.zip_code,
       agree_background: applicantInfo.agree_background,
   }
   return returnObj;
 }
 
 export function saveApplicantToSession(applicant, source){
-  console.log("Applicant saved in storage", applicant, source);
   sessionStorage.setItem("id", applicant.id);
   sessionStorage.setItem("firstName", applicant.first_name)
   sessionStorage.setItem("lastName", applicant.last_name);
@@ -44,7 +43,7 @@ export function saveApplicantToSession(applicant, source){
   }else{
     sessionStorage.setItem("firstName", applicant.firstName)
     sessionStorage.setItem("lastName", applicant.lastName);
-    sessionStorage.setItem("zipcode", applicant.zipCode);
+    sessionStorage.setItem("zipcode", applicant.zipcode);
   }
 
 }
